@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
     @ratings_to_show = params[:ratings] || session[:ratings] || {}
     
     
-    return @movies =  Movie.where("id = 1")
+    return @movies =  Movie.where(:rating @ratings_to_show)
     
   end
 
