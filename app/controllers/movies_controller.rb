@@ -15,8 +15,8 @@ class MoviesController < ApplicationController
       return @movies =  Movie.all
     elsif !params[:ratings].nil?
       return @movies = Movie.where(rating: (params[:ratings]).keys)
-    elsif !session[:ratings].nil?
-      return @movies = Movie.where(rating: (session[:ratings]).keys)
+    #elsif !session[:ratings].nil?
+    #  return @movies = Movie.where(rating: (session[:ratings]).keys)
     end
       
       
