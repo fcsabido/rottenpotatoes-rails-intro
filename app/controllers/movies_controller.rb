@@ -11,7 +11,15 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @ratings_to_show = params[:ratings] || session[:ratings] || {}
     
-    @movies = Movie.with_ratings(params[:ratings])  
+    if @ratings_to_show == {}
+      return @movies =  Movie.all
+    elsif !params[:ratings].nil?
+      return @movies = Movie.where(rating: (params[:ratings]).keys)
+    elsif !session[:ratings].nil?
+      return @movies = Movie.where(rating: (session[:ratings]).keys)
+    end
+      
+      
     
   end
 
