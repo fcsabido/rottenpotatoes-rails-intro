@@ -11,6 +11,11 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @ratings_to_show = params[:ratings] || session[:ratings] || {}
     
+    if @ratings_to_show == {}
+      @ratings_to_show = @all_ratings
+    end
+    
+    @movie = Movie.find(1)
     
   end
 
