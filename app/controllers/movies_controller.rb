@@ -25,6 +25,13 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
  
+    if !params[:home].nil?
+      session[:home] = params[:home]
+    elsif !session[:home.nil?]
+      params[:home] = session[:home]
+    end
+      
+      
     if params[:home].nil?
       @highlight_title = "bg-warning"
       @highlight_release_date = "bg-warning"
