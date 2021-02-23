@@ -2,7 +2,7 @@
 <h2>All Movies</h2>
 
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
-<&= text_field_tag(:sort)&>
+<&= text_field_tag(:sort, params[:sort])&>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
