@@ -12,11 +12,14 @@ class MoviesController < ApplicationController
     @ratings_to_show = params[:ratings] || session[:ratings] || {}
     
     @highlight = ""
+    @sort_method = ""
     
     if params[:sort] == "title" || params[:title_sort]
+      @sort_method = "title"
       @highlight_title = "bg-warning"
       @highlight_release_date = ""
-    elsif params[:sort] == "release_date"
+    elsif params[:sort] == "release_date" || params[:release_date_sort]
+      @sort_method = "release_date"
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
@@ -25,9 +28,9 @@ class MoviesController < ApplicationController
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(params[:sort])
     elsif !params[:ratings].nil?
-      return @movies = Movie.where(rating: (params[:ratings]).keys).order(params[:sort])
+      return @movies = Movie.where(rating: (params[:ratings]).keys).order(@sort_method)
     elsif !session[:ratings].nil?
-      return @movies = Movie.where(rating: (session[:ratings]).keys).order(params[:sort])
+      return @movies = Movie.where(rating: (session[:ratings]).keys).order(@sort_method)
     end
     
   end
