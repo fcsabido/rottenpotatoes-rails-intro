@@ -11,7 +11,10 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     
     if !session[:home].nil?
-      params = session
+      params[:ratings] = session[:ratings]
+      params[:sort] = session[:sort]
+      params[:title_sort] = session[:title_sort]
+      params[:release_date_sort] = session[:release_date_sort]
       session.clear
     end
     
@@ -30,7 +33,11 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
     
-    session = params
+    session[:ratings] = params[:ratings]
+    session[:sort] = params[:sort]
+    session[:title_sort] = params[:title_sort]
+    session[:release_date_sort] = params[:release_date_sort]
+ 
     
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(@sort_method)
