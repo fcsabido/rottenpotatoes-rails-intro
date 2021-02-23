@@ -9,6 +9,12 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
+    
+    if !session[:home].nil?
+      params = session
+      session.clear
+    end
+    
     @ratings_to_show = params[:ratings] || {}
     
     @highlight = ""
@@ -24,16 +30,7 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
     
-    if session[:home].nil?
-      @highlight_title = "bg-warning"
-      @highlight_release_date = "bg-warning"
-    else
-      session.clear
-    end
-      
-    
-    
-    
+    session = params
     
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(@sort_method)
