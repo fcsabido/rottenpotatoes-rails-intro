@@ -14,8 +14,13 @@ class MoviesController < ApplicationController
     @highlight = ""
     
     if params[:sort] == "title"
-      @highlight = "bg-warning"
+      @highlight_title = "bg-warning"
+      @highlight_release_date = ""
+    elsif params[:sort] == "release_date"
+      @highlight_title = ""
+      @highlight_release_date = "bg-warning"
     end
+      
     
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(params[:sort])
