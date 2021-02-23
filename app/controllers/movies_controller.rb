@@ -14,9 +14,9 @@ class MoviesController < ApplicationController
     if @ratings_to_show == {}
       return @movies =  Movie.all
     elsif !params[:ratings].nil?
-      return @movies = Movie.where(rating: (params[:ratings]).keys)
+      return @movies = Movie.where(rating: (params[:ratings]).keys).order(params[:sort])
     elsif !session[:ratings].nil?
-      return @movies = Movie.where(rating: (session[:ratings]).keys)
+      return @movies = Movie.where(rating: (session[:ratings]).keys).order(params[:sort])
     end
       
       
