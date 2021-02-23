@@ -29,6 +29,7 @@ class MoviesController < ApplicationController
       session[:home] = params[:home]
     elsif !session[:home.nil?]
       params[:home] = session[:home]
+      session.clear
     end
       
       
