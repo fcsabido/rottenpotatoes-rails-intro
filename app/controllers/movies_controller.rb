@@ -9,7 +9,7 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
-    @ratings_to_show = params[:ratings] || session[:ratings] || {}
+    @ratings_to_show = params[:ratings] || {}
     
     @highlight = ""
     @sort_method = ""
@@ -24,10 +24,16 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
     
-    if params[:sort].nil? && params[:ratings].nil?
+    if session[:home].nil?
       @highlight_title = "bg-warning"
       @highlight_release_date = "bg-warning"
     end
+    
+    
+    if !params[:sort].nil? || !params[:ratings].nil?
+      session[:home] = 1
+    end
+    
     
     
     if @ratings_to_show == {}
