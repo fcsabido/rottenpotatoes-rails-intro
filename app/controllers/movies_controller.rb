@@ -10,33 +10,20 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
-    if !session[:home].nil?
-      params[:ratings] = session[:ratings]
-      params[:sort] = session[:sort]
-      params[:title_sort] = session[:title_sort]
-      params[:release_date_sort] = session[:release_date_sort]
-      session.clear
-    end
-    
     @ratings_to_show = params[:ratings] || {}
     
     @highlight = ""
     @sort_method = ""
     
-    if params[:sort] == "title" || params[:title_sort]
+    if params[:sort] == "title" || !params[:title_sort].nil?
       @sort_method = "title"
       @highlight_title = "bg-warning"
       @highlight_release_date = ""
-    elsif params[:sort] == "release_date" || params[:release_date_sort]
+    elsif params[:sort] == "release_date" || !params[:release_date_sort].nil?
       @sort_method = "release_date"
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
-    
-    session[:ratings] = params[:ratings]
-    session[:sort] = params[:sort]
-    session[:title_sort] = params[:title_sort]
-    session[:release_date_sort] = params[:release_date_sort]
  
     
     if @ratings_to_show == {}
