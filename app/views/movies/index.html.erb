@@ -17,7 +17,7 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th <%= :class => "p-3 mb-2 bg-warning text-dark" %>><%= link_to "Movie Title", {:sort => "title", :ratings => @ratings_to_show}, :id => "title_header" %> </th>
+      <th class=<%= @highlight%>><%= link_to "Movie Title", {:sort => "title", :ratings => @ratings_to_show}, :id => "title_header" %> </th>
       <th>Rating</th>
       <th><%= link_to "Release Date", {:sort => "release_date", :ratings => @ratings_to_show}, :id => "release_date_header" %> </th>
       <th>More Info</th>

@@ -11,6 +11,12 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @ratings_to_show = params[:ratings] || session[:ratings] || {}
     
+    @highlight = ""
+    
+    if params[:sort] == "title"
+      @highlight = "p-3 mb-2 bg-warning text-dark"
+    end
+    
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(params[:sort])
     elsif !params[:ratings].nil?
@@ -18,8 +24,6 @@ class MoviesController < ApplicationController
     elsif !session[:ratings].nil?
       return @movies = Movie.where(rating: (session[:ratings]).keys).order(params[:sort])
     end
-      
-      
     
   end
 
