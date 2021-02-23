@@ -2,8 +2,7 @@
 <h2>All Movies</h2>
 
 <%= form_tag movies_path({:sort => "title"}), method: :get, id: 'ratings_form' do %>
-<%= hidden_field_tag "title_sort", true if params[:sort] == "title"%>
-<%= hidden_field_tag "release_date_sort", true if params[:sort] == "release_date"%>
+<%= hidden_field_tag "sort", params[:sort] == "title" ? "title" : params[:sort] == "release_date" ? "release_date" : "" %>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
