@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
     
-    if params.empty?
+    if !params.find(:sort)? && !params.find(:ratings)
       @highlight_title = "bg-warning"
       @highlight_release_date = "bg-warning"
     end
