@@ -27,12 +27,11 @@ class MoviesController < ApplicationController
     if session[:home].nil?
       @highlight_title = "bg-warning"
       @highlight_release_date = "bg-warning"
+    else
+      session.clear
     end
+      
     
-    
-    if !params[:sort].nil? || !params[:ratings].nil?
-      session[:home] = 1
-    end
     
     
     
