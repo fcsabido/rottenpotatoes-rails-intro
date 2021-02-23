@@ -2,6 +2,7 @@
 <h2>All Movies</h2>
 
 <%= form_tag movies_path({:sort => "title"}), method: :get, id: 'ratings_form' do %>
+<%= hidden_field_tag "title_sort", true if @highlight_title_header%>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">

@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
     
     @highlight = ""
     
-    if params[:sort] == "title"
+    if params[:sort] == "title" || params[:title_sort] == 1
       @highlight_title = "bg-warning"
       @highlight_release_date = ""
     elsif params[:sort] == "release_date"
