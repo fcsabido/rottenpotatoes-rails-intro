@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     @highlight = ""
     
     #if params[:sort] == "title"
-      @highlight = "p-3 mb-2 bg-warning text-dark"
+      @highlight = "p-3&nbsp;pmb-2 bg-warning text-dark"
     #end
     
     if @ratings_to_show == {}
