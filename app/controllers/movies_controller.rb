@@ -17,9 +17,13 @@ class MoviesController < ApplicationController
     # we have the following paths:
     # :home does not exists in neither params nor session => Fresh page
     # :home exists in params => User still in movies page, save session
-    # :home does not exists in params, but exists in session => User is returning after setting params,
-    #                                                        redirect to a page with loaded session
-    #                                                        parameters and erase session
+    # :home does not exists in params, but exists in session => User is returning to main page after
+    #                                  setting params. Redirect to a page with loaded session parameters
+    #                                  and erase session to prevent any new browser tab to show the
+    #                                  session parameters. Note: session is saved only when clicking the
+    #                                  Refresh button or one of the sorting table headers. If there is no
+    #                                  interaction after returning from a movie page, we click one of
+    #                                  the movie links, and then return again, we will see the initial page
     if !params[:home].nil?
       session[:home] = params[:home]
       session[:sort] = params[:sort] if !params[:sort].nil?
@@ -27,15 +31,10 @@ class MoviesController < ApplicationController
       session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
       session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
     elsif !session[:home].nil?
-      #params[:home] = session[:home] if !session[:home].nil?
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
       params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
-      params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
       session.clear
-      session[:sort] = params[:sort] if !params[:sort].nil?
-      session[:ratings] = params[:ratings] if !params[:ratings].nil?
-      session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
       redirect_to movies_path({:params => params}) and return
     end
     
