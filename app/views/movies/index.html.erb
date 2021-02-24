@@ -4,7 +4,6 @@
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
 <%# Keep the :sort value anytime the "Refresh" button is used%>
 <%= hidden_field_tag "sort", params[:sort] == "title" ? "title" : params[:sort] == "release_date" ? "release_date" : "" %>
-<%= hidden_field_tag "home", "1"%>
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
@@ -21,10 +20,10 @@
   <thead>
     <tr>
       <%# Highlighs the title header depending on the :sort value (determined by setting @highlight_title in the controller)%>
-      <th class=<%="#{@highlight_title}"%> ><%= link_to "Movie Title", movies_path({:sort => "title", :ratings => @ratings_to_show, :home => "1"}), :id => "title_header" %> </th>
+      <th class=<%="#{@highlight_title}"%> ><%= link_to "Movie Title", movies_path({:sort => "title", :ratings => @ratings_to_show}), :id => "title_header" %> </th>
       <th>Rating</th>
       <%# Highlighs the title header depending on the :sort value (determined by setting @highlight_release_date in the controller)%>
-      <th class=<%="#{@highlight_release_date}"%>><%= link_to "Release Date", {:sort => "release_date", :ratings => @ratings_to_show, :home => "1"}, :id => "release_date_header" %> </th>
+      <th class=<%="#{@highlight_release_date}"%>><%= link_to "Release Date", {:sort => "release_date", :ratings => @ratings_to_show}, :id => "release_date_header" %> </th>
       <th>More Info</th>
     </tr>
   </thead>

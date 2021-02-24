@@ -13,57 +13,33 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     
 
-    
-    # Determine wheter we are loading a page from a previous session or from a recently oppened page.
-    # :home is generated when the user click either the Refresh button or any sorting column. Then, 
-    # we have the following paths:
-    # :home does not exists in neither params nor session => Fresh page
-    # :home exists in params => User still in movies page, save session
-    # :home does not exists in params, but exists in session => User is returning to main page after
-    #                                  setting params. Redirect to a page with loaded session parameters
-    #                                  and erase session to prevent any new browser tab to show the
-    #                                  session parameters. Note: session is saved only when clicking the
-    #                                  Refresh button or one of the sorting table headers. If there is no
-    #                                  interaction after returning from a movie page, we click one of
-    #                                  the movie links, and then return again, we will see the initial page
+    # Load session values only when the user returns from visiting a movie page.  
     if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
     end
-    # if !params[:home].nil?
-    #   session[:home] = params[:home]
-    #   session[:sort] = params[:sort] if !params[:sort].nil?
-    #   session[:ratings] = params[:ratings] if !params[:ratings].nil?
-    #   session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-    #   session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
-    # elsif !session[:home].nil?
-    #   params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
-    #   session.clear
-    #   redirect_to movies_path({:params => params}) and return
-    # end
-    
+
     @ratings_to_show = params[:ratings] || {}
-    
-    @highlight = ""
     @sort_method = ""
     
     # Selects which Table Header will be highlighted and sets up the sort method. Note that 
     # aside from :sort we have :title_sort and :release_date_sort. The later two are created 
     # when the user uses Refresh button on the page (not the browser)
-    if params[:sort] == "title" || !params[:title_sort].nil?
+    if params[:sort] == "title"
       @sort_method = "title"
       @highlight_title = "bg-warning"
       @highlight_release_date = ""
-    elsif params[:sort] == "release_date" || !params[:release_date_sort].nil?
+    elsif params[:sort] == "release_date"
       @sort_method = "release_date"
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
 
+    # Save the latest sorting and rating selection to be loaded when returning from a movie page
     session[:sort] = @sort_method
     session[:ratings] = @ratings_to_show
     
-    # Prepares the list of movies to show. Methid '.key' returns the keys from the 
+    # Prepares the list of movies to show. Method '.key' returns the keys from the 
     # hashtable, '.where' looks into the Data Base for elements matching the 
     # parameters, '.order' selects the parameter to apply the sorting ("title" or 
     # "release_date" in this case)
