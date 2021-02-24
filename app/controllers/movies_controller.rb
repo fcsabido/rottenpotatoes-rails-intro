@@ -10,21 +10,20 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
-    if !params[:home].nil?
-      session[:home] = params[:home]
-      session[:sort] = params[:sort] if !params[:sort].nil?
-      session[:ratings] = params[:ratings] if !params[:ratings].nil?
-      session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-      session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
-    elsif !session[:home].nil?
+    # if !params[:home].nil?
+    #   session[:home] = params[:home]
+    #   session[:sort] = params[:sort] if !params[:sort].nil?
+    #   session[:ratings] = params[:ratings] if !params[:ratings].nil?
+    #   session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
+    #   session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
+    if params[:home].nil? && !session[:home].nil?
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
-      params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
-      params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
+    #  params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
+     # params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
       session.clear
+      redirect_to :sort => params[:sort], :ratings => params[:ratings] and return
     end
-    
-    
     
     @ratings_to_show = params[:ratings] || {}
     
