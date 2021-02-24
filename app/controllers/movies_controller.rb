@@ -7,9 +7,19 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    # Define initial values to show on page
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
+    # Determine wheter we are loading a page from a previous session or from a recently oppened page.
+    # :home is generated when the user click either the Refresh button or any sorting column. Then, 
+    # we have the following paths:
+    # :home does not exists in neither params nor session => Fresh page
+    # :home exists in params => User still in movies page
+    # :home does not exists in params, but exists in session => User is returning after setting params,
+    #                                                        redirect to a page with loaded session
+    #                                                        parameters and erase session
     if !params[:home].nil?
       session[:home] = params[:home]
       session[:sort] = params[:sort] if !params[:sort].nil?
@@ -17,7 +27,6 @@ class MoviesController < ApplicationController
       session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
       session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
     elsif !session[:home].nil?
-    #  params[:home] = session[:home]
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
       params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
@@ -31,6 +40,9 @@ class MoviesController < ApplicationController
     @highlight = ""
     @sort_method = ""
     
+    # Selects which Table Header will be highlighted and sets up the sort method. Note that 
+    # aside from :sort we have :title_sort and :release_date_sort. The later two are created 
+    # when the user uses Refresh button on the page (not the browser)
     if params[:sort] == "title" || !params[:title_sort].nil?
       @sort_method = "title"
       @highlight_title = "bg-warning"
@@ -40,21 +52,11 @@ class MoviesController < ApplicationController
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
- 
-  #  session[:sort] = @sort_method
-  #  session[:ratings] = @ratings_to_show
-  
-      
-    #if params[:home].nil?
-    #  @highlight_title = "bg-warning"
-    #  @highlight_release_date = "bg-warning"
-    #end
-  #  session[:sort] = params[:sort] if !params[:sort].nil?
-  #  session[:ratings] = params[:ratings] if !params[:ratings].nil?
-  #  session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-  #  session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
-
     
+    # Prepares the list of movies to show. Methid '.key' returns the keys from the 
+    # hashtable, '.where' looks into the Data Base for elements matching the 
+    # parameters, '.order' selects the parameter to apply the sorting ("title" or 
+    # "release_date" in this case)
     if @ratings_to_show == {}
       return @movies =  Movie.all.order(@sort_method)
     elsif !params[:ratings].nil?
