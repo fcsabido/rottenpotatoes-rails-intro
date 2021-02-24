@@ -21,8 +21,8 @@ class MoviesController < ApplicationController
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
     #  params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
      # params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
-    #  session.clear
-      redirect_to :sort => params[:sort], :ratings => params[:ratings] and return
+      #session.clear
+      redirect_to ({:sort => params[:sort], :ratings => params[:ratings]}) and return
     end
     
     @ratings_to_show = params[:ratings] || {}
