@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
       params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
       params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
-    #  session.clear
+      session.clear
       redirect_to movies_path({:params => params}) and return
     end
     
