@@ -40,16 +40,18 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
  
-      
+    session[:sort] = @sort_method
+    session[:ratings] = @ratings_to_show
+  
       
     #if params[:home].nil?
     #  @highlight_title = "bg-warning"
     #  @highlight_release_date = "bg-warning"
     #end
-    session[:sort] = params[:sort] if !params[:sort].nil?
-    session[:ratings] = params[:ratings] if !params[:ratings].nil?
-    session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-    session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
+  #  session[:sort] = params[:sort] if !params[:sort].nil?
+  #  session[:ratings] = params[:ratings] if !params[:ratings].nil?
+  #  session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
+  #  session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
 
     
     if @ratings_to_show == {}
