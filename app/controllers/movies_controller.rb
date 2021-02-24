@@ -20,7 +20,13 @@ class MoviesController < ApplicationController
     # :home does not exists in params, but exists in session => User is returning after setting params,
     #                                                        redirect to a page with loaded session
     #                                                        parameters and erase session
-    if params[:home].nil? && !session[:home].nil?
+    if !params[:home].nil?
+      session[:home] = params[:home]
+      session[:sort] = params[:sort] if !params[:sort].nil?
+      session[:ratings] = params[:ratings] if !params[:ratings].nil?
+      session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
+      session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
+    elsif !session[:home].nil?
       params[:home] = session[:home] if !session[:home].nil?
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
@@ -28,12 +34,6 @@ class MoviesController < ApplicationController
       params[:release_date_sort] = session[:release_date_sort] if !session[:release_date_sort].nil?
       session.clear
       redirect_to movies_path({:params => params}) and return
-    elsif !params[:home].nil?
-      session[:home] = params[:home]
-      session[:sort] = params[:sort] if !params[:sort].nil?
-      session[:ratings] = params[:ratings] if !params[:ratings].nil?
-      session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-      session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
     end
     
     @ratings_to_show = params[:ratings] || {}
