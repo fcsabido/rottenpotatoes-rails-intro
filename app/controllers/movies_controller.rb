@@ -12,9 +12,7 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
-    if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
-            @highlight_title = "bg-warning REFERRER"
-    end
+
     
     # Determine wheter we are loading a page from a previous session or from a recently oppened page.
     # :home is generated when the user click either the Refresh button or any sorting column. Then, 
@@ -28,19 +26,21 @@ class MoviesController < ApplicationController
     #                                  Refresh button or one of the sorting table headers. If there is no
     #                                  interaction after returning from a movie page, we click one of
     #                                  the movie links, and then return again, we will see the initial page
-    if !params[:home].nil?
-      session[:home] = params[:home]
-      session[:sort] = params[:sort] if !params[:sort].nil?
-      session[:ratings] = params[:ratings] if !params[:ratings].nil?
-      session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
-      session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
-    elsif !session[:home].nil?
+    if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
-      params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
-      session.clear
-      redirect_to movies_path({:params => params}) and return
     end
+    # if !params[:home].nil?
+    #   session[:home] = params[:home]
+    #   session[:sort] = params[:sort] if !params[:sort].nil?
+    #   session[:ratings] = params[:ratings] if !params[:ratings].nil?
+    #   session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
+    #   session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
+    # elsif !session[:home].nil?
+    #   params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
+    #   session.clear
+    #   redirect_to movies_path({:params => params}) and return
+    # end
     
     @ratings_to_show = params[:ratings] || {}
     
@@ -60,6 +60,8 @@ class MoviesController < ApplicationController
       @highlight_release_date = "bg-warning"
     end
 
+    session[:sort] = @sort_method
+    session[:ratings] = @ratings_to_show
     
     # Prepares the list of movies to show. Methid '.key' returns the keys from the 
     # hashtable, '.where' looks into the Data Base for elements matching the 
