@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
       session[:title_sort] = params[:title_sort] if !params[:title_sort].nil?
       session[:release_date_sort] = params[:release_date_sort] if !params[:release_date_sort].nil?
     elsif !session[:home].nil?
-      params[:home] = session[:home] if !session[:home].nil?
+      #params[:home] = session[:home] if !session[:home].nil?
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
       params[:title_sort] = session[:title_sort] if !session[:title_sort].nil?
