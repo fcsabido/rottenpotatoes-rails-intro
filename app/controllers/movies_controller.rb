@@ -13,11 +13,15 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     
 
-    # Load session values only when the user returns from visiting a movie page.  
+    # Load session values only when the user returns from visiting a movie page. If the
+    # user arrives through a non-movie page, the session is cleared.
     if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
+    else
+      session.clear
     end
+      
 
     @ratings_to_show = params[:ratings] || {}
     @sort_method = params[:sort] || ""
