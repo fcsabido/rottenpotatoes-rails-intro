@@ -12,7 +12,6 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
-
     # Load session values only when the user returns from visiting a movie page. If the
     # user arrives through a fresh page, the session is cleared. Note that all the web site
     # for this app matches the regex, meaning that the params will load session until
@@ -24,7 +23,6 @@ class MoviesController < ApplicationController
       session.clear
     end
       
-
     @ratings_to_show = params[:ratings] || {}
     @sort_method = params[:sort] || ""
     
