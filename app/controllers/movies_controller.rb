@@ -20,7 +20,7 @@ class MoviesController < ApplicationController
     # :home does not exists in params, but exists in session => User is returning after setting params,
     #                                                        redirect to a page with loaded session
     #                                                        parameters and erase session
-    if params[:home].nil? && !session[:home].nil? #|| !params[:homeTwo].nil?
+    if params[:home].nil? && !session[:home].nil?
       params[:home] = session[:home] if !session[:home].nil?
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
