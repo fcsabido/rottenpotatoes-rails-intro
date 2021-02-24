@@ -19,7 +19,7 @@ class MoviesController < ApplicationController
     if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
-    elsif request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies/
+    elsif request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies$/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
     else
