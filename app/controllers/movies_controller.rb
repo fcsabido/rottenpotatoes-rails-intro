@@ -24,7 +24,6 @@ class MoviesController < ApplicationController
     #                                  Refresh button or one of the sorting table headers. If there is no
     #                                  interaction after returning from a movie page, we click one of
     #                                  the movie links, and then return again, we will see the initial page
-
     if !params[:home].nil?
       session[:home] = params[:home]
       session[:sort] = params[:sort] if !params[:sort].nil?
@@ -55,6 +54,10 @@ class MoviesController < ApplicationController
       @sort_method = "release_date"
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
+    end
+    
+    if !request.referrer.nil?
+            @highlight_title = "bg-warning REFERRER"
     end
     
     # Prepares the list of movies to show. Methid '.key' returns the keys from the 
