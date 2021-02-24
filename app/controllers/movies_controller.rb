@@ -14,7 +14,9 @@ class MoviesController < ApplicationController
     
 
     # Load session values only when the user returns from visiting a movie page. If the
-    # user arrives through a non-movie page, the session is cleared.
+    # user arrives through a fresh page, the session is cleared. Note that all the web site
+    # for this app matches the regex, meaning that the params will load session until
+    # a fresh page is created.
     if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
       params[:sort] = session[:sort] if !session[:sort].nil?
       params[:ratings] = session[:ratings] if !session[:ratings].nil?
@@ -36,7 +38,6 @@ class MoviesController < ApplicationController
     end
 
     # Save the latest sorting and rating selection to be loaded when returning from a movie page.
-    # Added if statements to prevent overwrite when opening a fresh page.
     session[:sort] = @sort_method if !params[:sort].nil?
     session[:ratings] = @ratings_to_show if !params[:ratings].nil?
     
