@@ -12,6 +12,10 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
+    if request.referrer =~ /^https:\/\/safe-depths-17369.herokuapp.com\/movies\/.*/
+            @highlight_title = "bg-warning REFERRER"
+    end
+    
     # Determine wheter we are loading a page from a previous session or from a recently oppened page.
     # :home is generated when the user click either the Refresh button or any sorting column. Then, 
     # we have the following paths:
@@ -55,10 +59,7 @@ class MoviesController < ApplicationController
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
-    
-    if !request.referrer.nil?
-            @highlight_title = "bg-warning REFERRER"
-    end
+
     
     # Prepares the list of movies to show. Methid '.key' returns the keys from the 
     # hashtable, '.where' looks into the Data Base for elements matching the 
