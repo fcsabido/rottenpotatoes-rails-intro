@@ -20,24 +20,21 @@ class MoviesController < ApplicationController
     end
 
     @ratings_to_show = params[:ratings] || {}
-    @sort_method = ""
+    @sort_method = params[:sort] || ""
     
-    # Selects which Table Header will be highlighted and sets up the sort method. Note that 
-    # aside from :sort we have :title_sort and :release_date_sort. The later two are created 
-    # when the user uses Refresh button on the page (not the browser)
-    if params[:sort] == "title"
-      @sort_method = "title"
+    # Selects which Table Header will be highlighted.
+    if @sort_method == "title"
       @highlight_title = "bg-warning"
       @highlight_release_date = ""
-    elsif params[:sort] == "release_date"
-      @sort_method = "release_date"
+    elsif @sort_method == "release_date"
       @highlight_title = ""
       @highlight_release_date = "bg-warning"
     end
 
-    # Save the latest sorting and rating selection to be loaded when returning from a movie page
-    session[:sort] = @sort_method
-    session[:ratings] = @ratings_to_show
+    # Save the latest sorting and rating selection to be loaded when returning from a movie page.
+    # Added if statements to prevent overwrite when opening a fresh page.
+    session[:sort] = @sort_method if !params[:sort].nil?
+    session[:ratings] = @ratings_to_show if !params[:ratings].nil?
     
     # Prepares the list of movies to show. Method '.key' returns the keys from the 
     # hashtable, '.where' looks into the Data Base for elements matching the 
